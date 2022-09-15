@@ -1,7 +1,8 @@
 import { Router } from 'express';
+import { gameRoutes } from './games.routes';
 
 const routes = Router();
 
-routes.get('/', (_req, res) => res.json({ message: 'Hello' }));
+routes.use(gameRoutes);
 
 export { routes };
