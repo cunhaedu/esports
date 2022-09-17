@@ -1,10 +1,13 @@
 import { inject, injectable } from 'tsyringe';
 
+import { convertMinutesToHours } from '../../../../core/helpers/convertMinutesToHours.helper';
 import { AdRepository } from '../../domain/repositories/AdRepository';
 import { Ad } from '../../domain/entities/Ad';
 
-type FindGameAdsResponse = Omit<Ad, 'weekDays'> & {
+type FindGameAdsResponse = Omit<Ad, 'weekDays' | 'hourEnd' | 'hourStart'> & {
   weekDays: number[];
+  hourStart: string;
+  hourEnd: string;
 }
 
 @injectable()
@@ -24,6 +27,8 @@ export class FindGameAds {
     return ads.map(ad => ({
       ...ad,
       weekDays: ad.weekDays.split(',').map(weekDay => parseInt(weekDay, 10)),
+      hourEnd: convertMinutesToHours(ad.hourEnd),
+      hourStart: convertMinutesToHours(ad.hourStart),
     }))
   }
 }

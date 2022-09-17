@@ -1,5 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
+import { convertHourStringToMinutes } from '../../../../core/helpers/convertHourStringToMinutes.helper';
 import { GameRepository } from '../../domain/repositories/GameRepository';
 import { AdRepository } from '../../domain/repositories/AdRepository';
 import { Ad } from '../../domain/entities/Ad';
@@ -9,8 +10,8 @@ type CreateGameAdRequest = {
   yearsPlaying: number;
   discord: string;
   weekDays: number[];
-  hourStart: number;
-  hourEnd: number;
+  hourStart: string;
+  hourEnd: string;
   useVoiceChannel: boolean;
 }
 
@@ -34,7 +35,9 @@ export class CreateGameAd {
     await this.adRepository.create({
       ...data,
       gameId,
-      weekDays: data.weekDays.join(',')
+      weekDays: data.weekDays.join(','),
+      hourEnd: convertHourStringToMinutes(data.hourEnd),
+      hourStart: convertHourStringToMinutes(data.hourStart),
     } as Ad);
   }
 }
