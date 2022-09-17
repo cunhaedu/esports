@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
 import { GameRepository } from '../../../game/domain/repositories/GameRepository';
-import { Game } from '../../../game/domain/entities/game';
+import { Game } from '../../domain/entities/Game';
 
 @injectable()
 export class ListGames {

@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev:server": "tsnd src/infra/http/server.ts"
+    "dev:server": "tsnd --exit-child src/infra/http/server.ts"
   },
   "dependencies": {
     "@prisma/client": "^4.3.1",
