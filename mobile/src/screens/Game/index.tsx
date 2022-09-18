@@ -14,9 +14,12 @@ import { Heading } from '../../components/Heading';
 import { DuoCard } from '../../components/DuoCard';
 import { useEffect, useState } from 'react';
 import { IGameAd } from '../../interfaces/IGameAd';
+import { DuoMatch } from '../../components/DuoMatch';
 
 export function Game() {
-  const [gameAds, setGameAds] = useState<IGameAd[]>([])
+  const [gameAds, setGameAds] = useState<IGameAd[]>([]);
+  const [discordDuoSelected, setDiscordDuoSelected] = useState('');
+
   const navigation = useNavigation();
   const route = useRoute();
   const game = route.params as GameParams;
@@ -61,7 +64,7 @@ export function Game() {
           data={gameAds}
           keyExtractor={item => item.id}
           renderItem={({ item }) =>
-            <DuoCard key={item.id} data={item} onConnect={() => {}}  />
+            <DuoCard key={item.id} data={item} onConnect={() => setDiscordDuoSelected(item.discord)}  />
           }
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={[
@@ -74,8 +77,12 @@ export function Game() {
               Não há anúncios publicados para esse jogo!
             </Text>
           }
-        >
-        </FlatList>
+        />
+
+        <DuoMatch
+          onClose={() => setDiscordDuoSelected('')}
+          visible={discordDuoSelected.length > 0}
+          discord={discordDuoSelected} />
       </SafeAreaView>
     </Background>
   );
