@@ -3,7 +3,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { useEffect, useState } from 'react';
 
 import { CreateAdModal } from '../../components/CreateAdModal';
-import { GameBanner } from '../../components/GameBanner';
+import { GameBannerSlider } from '../../components/GameBannerSlider';
 
 import { api } from '../../services/api';
 import { IGame } from '../interfaces/IGame';
@@ -15,7 +15,7 @@ export default function Example() {
     api.get<IGame[]>('/games').then(response => {
       setGames(response.data);
     });
-  }, [])
+  }, []);
 
   return (
     <>
@@ -51,13 +51,7 @@ export default function Example() {
         </div>
       </div>
 
-      <section className="mx-auto max-w-[1344px] flex flex-col items-center mb-10">
-        <div className='grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6 px-6'>
-          {games.map(game => (
-            <GameBanner key={game.id} data={game} />
-          ))}
-        </div>
-      </section>
+      <GameBannerSlider games={games} />
     </>
   )
 }
